@@ -53,7 +53,8 @@ bool operator<=(const Date& ldate, const Date& rdate) {
 }
 
 bool operator>(const Date& ldate, const Date& rdate) {
-    return !(ldate < rdate);
+    return make_tuple(ldate.GetYear(), ldate.GetMonth(), ldate.GetDay()) >
+           make_tuple(rdate.GetYear(), rdate.GetMonth(), rdate.GetDay());
 }
 
 bool operator>=(const Date& ldate, const Date& rdate) {
