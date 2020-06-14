@@ -3,6 +3,7 @@
 #include "node.h"
 #include <map>
 #include <vector>
+#include <set>
 #include <functional>
 
 using namespace std;

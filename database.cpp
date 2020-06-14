@@ -33,8 +33,28 @@ vector<pair<Date, string>> Database::FindIf(const function<bool (const Date &, c
 
 int Database::RemoveIf(const function<bool (const Date &, const string &)> &predicate) {
 
+    int removes_count = 0;
 
+    set<Date> date_need_to_delete;
 
+    for (auto& [date, events] : records) {
+        auto it = stable_partition(events.begin(), events.end(),
+        [&, date = date](auto& event) {
+            return !predicate(date, event);
+        });
+        removes_count += events.end() - it;
+        events.erase(it, events.end());
+
+        if (events.empty()) {
+            date_need_to_delete.insert(date);
+        }
+    }
+
+    for (const auto& date : date_need_to_delete) {
+        records.erase(date);
+    }
+
+    return removes_count;
 }
 
 ostream& operator<<(ostream& os, const pair<Date, string>& entry) {
