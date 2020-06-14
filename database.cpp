@@ -60,17 +60,14 @@ int Database::RemoveIf(const function<bool (const Date &, const string &)> &pred
 
 pair<Date, string> Database::Last(const Date &date) {
 
-    auto it = records.lower_bound(date);
-
-    if (it->first == date) {
-        return {date, it->second.back()};
-    }
+    auto it = records.upper_bound(date);
 
     if (it == records.begin()) {
         throw invalid_argument("No entries");
     }
 
     it = prev(it);
+
     return {it->first, it->second.back()};
 }
 
