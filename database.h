@@ -14,6 +14,7 @@ public:
     void Print(ostream& os) const;
     vector<pair<Date, string>> FindIf(const function<bool(const Date&, const string&)>& predicate) const;
     int RemoveIf(const function<bool(const Date&, const string&)>& predicate);
+    pair<Date, string> Last(const Date& date);
 private:
     map<Date, vector<string>> records;
 };
